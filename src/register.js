@@ -11,18 +11,18 @@ const ProfilerPanel = styled.div({
 class ProfilerInfo extends React.Component {
   constructor() {
     super();
-    this.state = { data: [] };
+    this.state = { data: "nice" };
     this.onUpdateProfilerInfo = this.onUpdateProfilerInfo.bind(this);
   }
 
   componentDidMount() {
     const { channel, api } = this.props;
     // Listen to the notes and render it.
-    channel.on('MYADDON/add_notes', this.onAddNotes);
+    channel.on("REACTPROFILERADDON/updateProfilerInfo", this.onUpdateProfilerInfo);
 
     // Clear the current notes on every story change.
     this.stopListeningOnStory = api.onStory(() => {
-      this.onUpdateProfileInfo([]);
+      this.onUpdateProfilerInfo('dope');
     });
   }
 
@@ -35,6 +35,7 @@ class ProfilerInfo extends React.Component {
   }
   
   onUpdateProfilerInfo(data) {
+    console.log(data);
     this.setState({ data });
   }
 
@@ -42,15 +43,16 @@ class ProfilerInfo extends React.Component {
     const { data } = this.state;
     const { active } = this.props;
 
-    return active ? <ProfilerPanel>Profiler</ProfilerPanel> : null;
+    return active ? <ProfilerPanel key="profilerPanel">{data}</ProfilerPanel> : null;
   }
 }
-
-// Register the addon with a unique name.
-addons.register('REACTPROFILERADDON', api => {
-  // Also need to set a unique name to the panel.
-  addons.addPanel('REACTPROFILERADDON/panel', {
-    title: 'Profiler',
-    render: ({ active }) => <ProfilerInfo channel={addons.getChannel()} api={api} active={active} />,
+export default function register() {
+  // Register the addon with a unique name.
+  addons.register('REACTPROFILERADDON', api => {
+    // Also need to set a unique name to the panel.
+    addons.addPanel('REACTPROFILERADDON/panel', {
+      title: 'Profiler',
+      render: ({ active }) => <ProfilerInfo channel={addons.getChannel()} api={api} active={active} />,
+    });
   });
-});
+}
