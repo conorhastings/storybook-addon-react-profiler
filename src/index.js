@@ -1,22 +1,26 @@
 import React, { unstable_Profiler as Profiler } from "react";
 import addons, { makeDecorator } from "@storybook/addons";
 
-const withProfiler = makeDecorator({
+export const withProfiler = makeDecorator({
   name: "withProfiler",
   parameterName: "profiler",
   skipIfNoParametersOrOptions: false,
   wrapper: (getStory, context) => {
+    const channel = addons.getChannel();
     function onRender(id, phase, actualTime, baseTime, startTime, commitTime) {
-      const channel = addons.getChannel();
       channel.emit("REACTPROFILERADDON/updateProfilerInfo", {
-        data: commitTime
+        time: actualTime,
+        isInitialMount: phase !== 'update',
+        timeBetweenStartAndCommit: commitTime - startTime  
       });
     }
-    console.log("here");
-    channel.emit("REACTPROFILERADDON/updateProfilerInfo", {
-      data: "fuckfuckfuck"
-    });
-    return <Profiler key="profiler" onRender={onRender}>{getStory(context)}</Profiler>;
+    return (
+      <Profiler 
+        id={context.id} 
+        key="profiler" 
+        onRender={onRender}>{getStory(context)}
+      </Profiler>
+    );
   }
 });
 

@@ -11,7 +11,7 @@ const ProfilerPanel = styled.div({
 class ProfilerInfo extends React.Component {
   constructor() {
     super();
-    this.state = { data: "nice" };
+    this.state = { data: {}};
     this.onUpdateProfilerInfo = this.onUpdateProfilerInfo.bind(this);
   }
 
@@ -22,7 +22,7 @@ class ProfilerInfo extends React.Component {
 
     // Clear the current notes on every story change.
     this.stopListeningOnStory = api.onStory(() => {
-      this.onUpdateProfilerInfo('dope');
+      this.onUpdateProfilerInfo({});
     });
   }
 
@@ -42,8 +42,16 @@ class ProfilerInfo extends React.Component {
   render() {
     const { data } = this.state;
     const { active } = this.props;
-
-    return active ? <ProfilerPanel key="profilerPanel">{data}</ProfilerPanel> : null;
+    console.log(data)
+    return (
+      <ProfilerPanel key="profilerPanel">
+        <div>
+          <div><strong>Is Update Or Initial Mount</strong>: {data.isIniitialMount ? 'Initial Mount' : 'Update'}</div>
+          <div><strong>Time To Render</strong>: {`${data.time} ms`}</div>
+          <div><strong>Difference Between Start Time And Commit Time</strong>(can be indicator of lag): {`${data.timeBetweenStartAndCommit} ms`}</div>
+        </div>
+      </ProfilerPanel>
+    );
   }
 }
 export default function register() {
