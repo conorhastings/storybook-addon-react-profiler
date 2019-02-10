@@ -37,4 +37,4 @@ storiesOf('Button', module)
 
 Interacting With the component will produce an outcome like the below image in the Profiler panel. 
 
-<img src ="./profiler.png" />
+<img src ='./profiler.png' />
