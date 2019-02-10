@@ -17,6 +17,7 @@
     "@babel/preset-react": "^7.0.0",
     "@storybook/addons": "^4.1.11",
     "prettier": "^1.16.4",
+    "pretty-ms": "^4.0.0",
     "react": "^16.8.0",
     "storybook": "^1.0.0"
   }

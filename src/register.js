@@ -42,7 +42,6 @@ class ProfilerInfo extends React.Component {
   }
 
   onUpdateProfilerInfo(data) {
-    console.log(this.node.scrollHeight, this.node.parentNode);
     this.node.parentNode.scrollTop = this.node.scrollHeight;
     this.setState({ data });
   }
@@ -79,12 +78,11 @@ class ProfilerInfo extends React.Component {
                 {data.isIniitialMount ? "Initial Mount" : "Update"}
               </div>
               <div>
-                <strong>Time To Render</strong>: {`${data.time} ms`}
+                <strong>Time To Render</strong>: {`${data.time}`}
               </div>
               <div>
                 <strong>Difference Between Start Time And Commit Time</strong>
-                (can be indicator of lag):{" "}
-                {`${data.timeBetweenStartAndCommit} ms`}
+                (can be indicator of lag): {`${data.timeBetweenStartAndCommit}`}
               </div>
             </div>
           ))}

@@ -1,5 +1,6 @@
 import React, { unstable_Profiler as Profiler } from "react";
 import addons, { makeDecorator } from "@storybook/addons";
+import prettyMS from "pretty-ms";
 
 function cacheProfiles() {
   const profiles = {};
@@ -24,9 +25,9 @@ export const withProfiler = makeDecorator({
         "REACTPROFILERADDON/updateProfilerInfo",
         getProfiles(id, {
           id,
-          time: actualTime,
+          time: prettyMS(actualTime),
           isInitialMount: phase !== "update",
-          timeBetweenStartAndCommit: commitTime - startTime
+          timeBetweenStartAndCommit: prettyMS(commitTime - startTime)
         })
       );
     }
