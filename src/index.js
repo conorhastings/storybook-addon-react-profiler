@@ -32,7 +32,11 @@ export const withProfiler = makeDecorator({
       );
     }
     return (
-      <Profiler id={context.id} key="profiler" onRender={onRender}>
+      <Profiler
+        id={`${context.parameters.fileName}${context.story}`}
+        key="profiler"
+        onRender={onRender}
+      >
         {getStory(context)}
       </Profiler>
     );
